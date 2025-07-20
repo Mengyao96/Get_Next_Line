@@ -1,21 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mezhang <mezhang@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 19:22:21 by mezhang           #+#    #+#             */
-/*   Updated: 2025/07/20 12:17:42 by mezhang          ###   ########.fr       */
+/*   Updated: 2025/07/17 21:25:06 by mezhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 10
-#endif
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -24,6 +20,9 @@
 # include <fcntl.h>
 
 //GNL
+char		*read_a_line(int fd, char *vault);
+char		*to_line(char *vault);
+static char	*update(char *vault);
 char		*get_next_line(int fd);
 
 //GNL_utils
@@ -32,7 +31,6 @@ size_t		ft_strlen(const char *s);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
-
 
 
 
