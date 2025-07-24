@@ -6,13 +6,16 @@
 /*   By: mezhang <mezhang@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 19:22:21 by mezhang           #+#    #+#             */
-/*   Updated: 2025/07/14 14:30:45 by mezhang          ###   ########.fr       */
+/*   Updated: 2025/07/24 20:33:46 by mezhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_BONUS_H
 # define GET_NEXT_LINE_BONUS_H
-# define BUFFER_SIZE 3
+
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 5
+#endif
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -23,7 +26,7 @@
 //GNL
 char		*read_a_line(int fd, char *vault);
 char		*to_line(char *vault);
-static char	*update(char *vault);
+char		*update(char *vault, char *the_line);
 char		*get_next_line(int fd);
 
 //GNL_utils
