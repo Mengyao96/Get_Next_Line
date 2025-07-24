@@ -6,7 +6,7 @@
 /*   By: mezhang <mezhang@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 16:37:43 by mezhang           #+#    #+#             */
-/*   Updated: 2025/07/19 21:23:55 by mezhang          ###   ########.fr       */
+/*   Updated: 2025/07/21 22:21:16 by mezhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!s1 || !s2)
 		return (NULL);
 	total_len = ft_strlen(s1) + ft_strlen(s2);
-	ptr = (char *)malloc(sizeof(char) * (total_len) + 1);
+	ptr = (char *)malloc(sizeof(char) * (total_len + 1));
 	if (ptr == NULL)
 		return (NULL);
 	count = 0;

@@ -6,7 +6,7 @@
 /*   By: mezhang <mezhang@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 16:02:40 by mezhang           #+#    #+#             */
-/*   Updated: 2025/07/20 15:00:11 by mezhang          ###   ########.fr       */
+/*   Updated: 2025/07/24 14:02:16 by mezhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,128 +14,107 @@
 
 void clean_up(void **vault)
 {
-	if (vault && *vault)
-	{
-		free(*vault);
-		*vault = NULL;
-	}
+	void *temp;
+
+	if (!vault || !*vault)
+		return;
+	temp = *vault;
+	free(temp);
+	*vault = NULL;
 }
 
-static char	*read_a_line(int fd, char *vault)
+char	*read_a_line(int fd, char *ptr)
 {
-	char	*chunk;
+	char	chunk[BUFFER_SIZE + 1];
 	int		bytes_read;
 	char	*temp;
 
-	chunk = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	if (!chunk)
-		return (NULL);
-	if (!vault)
-	{
-		vault = ft_calloc(1, sizeof(char));
-		if (!vault)
-			return (clean_up((void **)&chunk), NULL);
-	}
 	bytes_read = 1;
-	while (bytes_read > 0 && !ft_strchr(vault, '\n'))
+	while (bytes_read > 0 && !ft_strchr(ptr, '\n'))
 	{
 		bytes_read = read(fd, chunk, BUFFER_SIZE);
 		if (bytes_read < 0)
-			return (clean_up((void **)&chunk), NULL);
+			return (clean_up((void **)&ptr), NULL);
+		if (bytes_read == 0)
+			break;
 		chunk[bytes_read] = '\0';
-		temp = ft_strjoin(vault, chunk);
-		clean_up((void **)&vault);
-		vault = temp;
+		temp = ft_strjoin(ptr, chunk);
+		if (!temp)
+			return (clean_up((void **)&ptr), NULL);
+		clean_up((void **)&ptr);
+		ptr = temp;
 	}
-	return (clean_up((void **)&chunk), vault);
+	return (ptr);
 }
 
-static char	*to_line(char *vault)
+char	*to_line(char *vault)
 {
-	char	*line;
 	size_t	i;
 
-	if(!vault || !*vault)
+	if (!vault || !*vault)
 		return (NULL);
 	i = 0;
 	while (vault[i] && vault[i] != '\n')
 		i++;
 	if (vault[i] == '\n')
 		i++;
-	line = ft_substr(vault, 0, i);
-	return (line);
-	// return(ft_substr(vault, 0, i));
+	return (ft_substr(vault, 0, i));
 }
 
-static char	*update(char *vault)
+char	*update(char *vault, char *the_line)
 {
-	size_t	i;
+	size_t	len_vault;
+	size_t	len_line;
 	char	*new_vault;
-	size_t	len;
 
-	if(!vault)
+	if (!vault)
 		return (NULL);
-	i = 0;
-	while (vault[i] && vault[i] != '\n')
-		i++;
-	if (vault[i] == '\n')
-		i++;
-	len = ft_strlen(vault);
-	if (i >= len)
+	len_vault = ft_strlen(vault);
+	len_line = ft_strlen(the_line);
+	if (len_line == len_vault)
 		return (clean_up((void **)&vault), NULL);
-	new_vault = ft_substr(vault, i, len - i);
+	new_vault = ft_substr(vault, len_line, len_vault - len_line);
 	if (!new_vault)
 		return (clean_up((void **)&vault), NULL);
 	return (clean_up((void **)&vault), new_vault);
 }
 
-
 char	*get_next_line(int fd)
 {
 	static char	*vault;
-	char	*temp;
 	char	*the_line;
 	char	*new_vault;
 
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+		return (clean_up((void **)&vault), NULL);
 	if (!vault)
 	{
-		vault = ft_calloc(1, sizeof(char));
+		vault = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 		if (!vault)
 			return (NULL);
 	}
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-	{
-		clean_up((void **)&vault);
-		vault = NULL;
+	vault = read_a_line(fd, vault);
+	if (!vault)
 		return (NULL);
-	}
-	temp = read_a_line(fd, vault);
-	if(temp == NULL)
-	{
-		clean_up((void **)&vault);
-		vault = NULL;
-		return (NULL);
-	}
-	vault = temp;
-
 	the_line = to_line(vault);
 	if (!the_line)
-	{
-		clean_up((void **)&vault);
-		vault = NULL;
-		return (NULL);
-	}
-	new_vault = update(vault);
-	if (!new_vault)
-		vault = NULL;
-	else
-		vault = new_vault;
-	return	(the_line);
+		return (clean_up((void **)&vault), NULL);
+	new_vault = update(vault, the_line);
+	vault = new_vault;
+	return (the_line);
 }
 
-/* int	main(void)
+/* void	leak()
 {
-	int		fd = open("./test5.txt", O_RDONLY);
+	system("leaks -q a.out");
+}
+
+int	main(void)
+{
+
+	atexit(leak);
+
+	int		fd = open("./test2.txt", O_RDONLY);
 	char	*new_line;
 	int		count = 0;
 
@@ -152,4 +131,5 @@ char	*get_next_line(int fd)
 	}
 	close(fd);
 	return (0);
-} */
+}
+ */

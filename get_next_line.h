@@ -6,7 +6,7 @@
 /*   By: mezhang <mezhang@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 19:22:21 by mezhang           #+#    #+#             */
-/*   Updated: 2025/07/20 12:17:42 by mezhang          ###   ########.fr       */
+/*   Updated: 2025/07/21 16:45:32 by mezhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 10
+# define BUFFER_SIZE 5
 #endif
 
 # include <unistd.h>
