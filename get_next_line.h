@@ -6,15 +6,15 @@
 /*   By: mezhang <mezhang@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 19:22:21 by mezhang           #+#    #+#             */
-/*   Updated: 2025/07/21 16:45:32 by mezhang          ###   ########.fr       */
+/*   Updated: 2025/07/26 12:13:11 by mezhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 5
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 5
 #endif
 
 # include <unistd.h>
@@ -32,8 +32,5 @@ size_t		ft_strlen(const char *s);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
-
-
-
 
 #endif

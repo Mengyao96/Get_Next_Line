@@ -6,7 +6,7 @@
 /*   By: mezhang <mezhang@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 16:37:43 by mezhang           #+#    #+#             */
-/*   Updated: 2025/07/24 19:21:41 by mezhang          ###   ########.fr       */
+/*   Updated: 2025/07/26 12:09:56 by mezhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (!substring)
 		return (NULL);
 	i = 0;
-	while (i < len/*  && s[start + i] != '\0' */)
+	while (i < len)
 		substring[i++] = s[start++];
 	substring[i] = '\0';
 	return (substring);
 }
-
